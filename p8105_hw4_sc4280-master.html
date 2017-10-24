@@ -170,10 +170,12 @@ library(lubridate)</code></pre>
   mutate(.,president=as.character(president))%&gt;%
   mutate(.,president = recode(president, &quot;FALSE&quot; = &quot;dem&quot;, &quot;TRUE&quot; = &quot;gop&quot;)) %&gt;%
   select(.,-prez_dem,-prez_gop)%&gt;%
-  rename(.,&quot;date&quot;=&quot;mon&quot;)</code></pre>
+  rename(.,&quot;date&quot;=&quot;mon&quot;)%&gt;%
+  mutate(.,date=as.Date(date))</code></pre>
 <pre class="r"><code>GDP_clean=GDP %&gt;% 
   clean_names() %&gt;% 
   filter(.,value!=&quot;.&quot;)</code></pre>
+<pre class="r"><code>pols_GDP=left_join(pols_month_clean,GDP_clean,by=&quot;date&quot;)</code></pre>
 </div>
 
 
