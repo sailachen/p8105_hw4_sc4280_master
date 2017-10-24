@@ -4,4 +4,33 @@ author: "Saila Chen"
 date: "October 24, 2017"
 output: html_document
 ---
+##Problem2
+```{r}
+library(tidyverse)
+library(janitor)
+library(lubridate)
+```
+
+```{r}
+pols_month=read_csv(file="./fivethirtyeight_datasets/pols-month.csv")
+GDP=read_csv(file="./fivethirtyeight_datasets/GDP.csv")
+```
+
+```{r}
+pols_month_clean=pols_month%>%
+  clean_names()%>%
+  mutate(.,mon=as.POSIXct(mon))%>%
+  mutate(.,mon=floor_date(mon,"month")) %>% 
+  mutate(.,president=prez_gop==1)%>%
+  mutate(.,president=as.character(president))%>%
+  mutate(.,president = recode(president, "FALSE" = "dem", "TRUE" = "gop")) %>%
+  select(.,-prez_dem,-prez_gop)%>%
+  rename(.,"date"="mon")
+```
+```{r}
+GDP_clean=GDP %>% 
+  clean_names() %>% 
+  filter(.,value!=".")
+```
+
 

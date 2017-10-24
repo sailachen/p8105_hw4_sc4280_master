@@ -124,7 +124,57 @@ $(document).ready(function () {
 </div>
 
 
-
+<div id="problem2" class="section level2">
+<h2>Problem2</h2>
+<pre class="r"><code>library(tidyverse)</code></pre>
+<pre><code>## Loading tidyverse: ggplot2
+## Loading tidyverse: tibble
+## Loading tidyverse: tidyr
+## Loading tidyverse: readr
+## Loading tidyverse: purrr
+## Loading tidyverse: dplyr</code></pre>
+<pre><code>## Conflicts with tidy packages ----------------------------------------------</code></pre>
+<pre><code>## filter(): dplyr, stats
+## lag():    dplyr, stats</code></pre>
+<pre class="r"><code>library(janitor)
+library(lubridate)</code></pre>
+<pre><code>## 
+## Attaching package: 'lubridate'</code></pre>
+<pre><code>## The following object is masked from 'package:base':
+## 
+##     date</code></pre>
+<pre class="r"><code>pols_month=read_csv(file=&quot;./fivethirtyeight_datasets/pols-month.csv&quot;)</code></pre>
+<pre><code>## Parsed with column specification:
+## cols(
+##   mon = col_date(format = &quot;&quot;),
+##   prez_gop = col_integer(),
+##   gov_gop = col_integer(),
+##   sen_gop = col_integer(),
+##   rep_gop = col_integer(),
+##   prez_dem = col_integer(),
+##   gov_dem = col_integer(),
+##   sen_dem = col_integer(),
+##   rep_dem = col_integer()
+## )</code></pre>
+<pre class="r"><code>GDP=read_csv(file=&quot;./fivethirtyeight_datasets/GDP.csv&quot;)</code></pre>
+<pre><code>## Parsed with column specification:
+## cols(
+##   DATE = col_date(format = &quot;&quot;),
+##   VALUE = col_character()
+## )</code></pre>
+<pre class="r"><code>pols_month_clean=pols_month%&gt;%
+  clean_names()%&gt;%
+  mutate(.,mon=as.POSIXct(mon))%&gt;%
+  mutate(.,mon=floor_date(mon,&quot;month&quot;)) %&gt;% 
+  mutate(.,president=prez_gop==1)%&gt;%
+  mutate(.,president=as.character(president))%&gt;%
+  mutate(.,president = recode(president, &quot;FALSE&quot; = &quot;dem&quot;, &quot;TRUE&quot; = &quot;gop&quot;)) %&gt;%
+  select(.,-prez_dem,-prez_gop)%&gt;%
+  rename(.,&quot;date&quot;=&quot;mon&quot;)</code></pre>
+<pre class="r"><code>GDP_clean=GDP %&gt;% 
+  clean_names() %&gt;% 
+  filter(.,value!=&quot;.&quot;)</code></pre>
+</div>
 
 
 
