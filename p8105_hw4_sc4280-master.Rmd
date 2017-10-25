@@ -4,7 +4,7 @@ author: "Saila Chen"
 date: "October 24, 2017"
 output: html_document
 ---
-##Problem2
+##Problem2 Saila Chen is lead
 ```{r}
 library(tidyverse)
 library(janitor)
