@@ -28,11 +28,13 @@ pols_month_clean=pols_month%>%
   rename(.,"date"="mon")%>%
   mutate(.,date=as.Date(date))
 ```
+
 ```{r}
 GDP_clean=GDP %>% 
   clean_names() %>% 
   filter(.,value!=".")
 ```
+
 ```{r}
 pols_GDP=left_join(pols_month_clean,GDP_clean,by="date")
 ```
